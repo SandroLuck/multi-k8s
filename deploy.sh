@@ -12,8 +12,5 @@ docker push sluck/multi-server:$GIT_SHA
 
 kubectl apply -f k8s
 kubectl set image deployments/server-deployment server=sluck/multi-server:$GIT_SHA
-kubectl set image deployments/client-deployment server=sluck/multi-client:$GIT_SHA
-kubectl set image deployments/worker-deployment server=sluck/multi-worker:$GIT_SHA
-
-
-
+kubectl set image deployments/client-deployment client=sluck/multi-client:$GIT_SHA
+kubectl set image deployments/worker-deployment worker=sluck/multi-worker:$GIT_SHA
