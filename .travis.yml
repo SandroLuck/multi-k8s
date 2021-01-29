@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+env:
+  global:
+    - GIT_SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+  - openssl aes-256-cbc -K $encrypted_7ff0af11da73_key -iv $encrypted_7ff0af11da73_iv -in serv.json.enc -out serv.json -d
+  - curl https://sdl.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project multi-k8s-303212
+  - gcloud config set compute/zone europe-west1-b
+  - gcloud container clusters get-credentials multi-cluster-k8
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t sluck/react-test -f .client/Dockerfile.dev ./client
+script:
+  - docker run -e CI=true USERNAME/react-test npm test
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
