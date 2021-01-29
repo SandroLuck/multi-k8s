@@ -17,9 +17,9 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React 3
+            DONT BE A BITCH HELLO!!!!!!!!!!
           </a>
-          <Link to="/">Home</Link>
+          <Link to="/">BE A BITCH!!!!!!!!!!</Link>
           <Link to="/otherpage">Other Page</Link>
         </header>
         <div>
